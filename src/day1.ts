@@ -1,8 +1,6 @@
-// const input = new TextDecoder().decode(
-//     await Bun.file(__dirname + "/test").bytes(),
-// );
 const input = new TextDecoder().decode(
-    await Bun.file(__dirname + "/input").bytes(),
+    // NOTE: await Bun.file("./data/day1/input").bytes(),
+    await Bun.file("./data/day1/input").bytes(),
 );
 const lines = input.split("\n");
 
@@ -66,3 +64,9 @@ export function part2() {
     });
     return sum;
 }
+
+const part_1 = part1();
+console.log(`SUM is ${part_1}`);
+
+const part_2 = part2();
+console.log(`SUM is ${part_2}`);

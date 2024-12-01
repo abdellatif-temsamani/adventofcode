@@ -66,7 +66,4 @@ typings/
 # next.js build output
 .next
 
-
-# can download from https://adventofcode.com/
-**/**/input
-**/**/test
+data/
