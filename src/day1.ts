@@ -29,7 +29,7 @@ function getPairs(pairs: Pair[], lists: Lists) {
     }
 }
 
-export function part1(pairs: Pair[]): number {
+function part1(pairs: Pair[]): number {
     let sum = 0;
     pairs.forEach((pair) => {
         const farApart = () => {
@@ -43,7 +43,7 @@ export function part1(pairs: Pair[]): number {
     return sum;
 }
 
-export function part2(pairs: Pair[]) {
+function part2(pairs: Pair[]) {
     const map = new Map<number, number>();
 
     pairs.forEach((pair) => {
@@ -62,10 +62,11 @@ export function part2(pairs: Pair[]) {
 }
 
 async function main() {
-    const input = new TextDecoder().decode(
-        // await Bun.file("./data/day1/test").bytes(),
-        await Bun.file("./data/day1/input").bytes(),
-    );
+    const path = {
+        test: "./data/day1/test",
+        input: "./data/day1/input",
+    };
+    const input = fs.readFileSync(path.test, "utf-8");
 
     const lines = input.split("\n");
     const lists: Lists = {
