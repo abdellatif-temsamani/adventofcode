@@ -1,39 +1,35 @@
-const input = new TextDecoder().decode(
-    // NOTE: await Bun.file("./data/day1/input").bytes(),
-    await Bun.file("./data/day1/input").bytes(),
-);
-const lines = input.split("\n");
+import fs from "node:fs";
 
 type Pair = {
     left: number;
     right: number;
 };
-const leftList: number[] = [];
-const rightList: number[] = [];
 
-function process_line(line: string) {
+type Lists = {
+    left: number[];
+    right: number[];
+};
+
+function processLine(lists: Lists, line: string) {
     const [left, right] = line.split("   ");
-
     if (!isNaN(+left) && !isNaN(+right)) {
-        leftList.push(Number.parseInt(left));
-        rightList.push(Number.parseInt(right));
+        lists.left.push(Number.parseInt(left));
+        lists.right.push(Number.parseInt(right));
     }
 }
 
-lines.forEach((line) => {
-    process_line(line);
-});
-
-const pairs: Pair[] = [];
-
-leftList.sort((a, b) => a - b);
-rightList.sort((a, b) => a - b);
-
-for (let i = 0, len = leftList.length; i < len; i++) {
-    pairs.push({ left: leftList[i], right: rightList[i] });
+function sortLists(lists: Lists) {
+    lists.left.sort((a, b) => a - b);
+    lists.right.sort((a, b) => a - b);
 }
 
-export function part1(): number {
+function getPairs(pairs: Pair[], lists: Lists) {
+    for (let i = 0, len = lists.left.length; i < len; i++) {
+        pairs.push({ left: lists.left[i], right: lists.right[i] });
+    }
+}
+
+export function part1(pairs: Pair[]): number {
     let sum = 0;
     pairs.forEach((pair) => {
         const farApart = () => {
@@ -47,7 +43,7 @@ export function part1(): number {
     return sum;
 }
 
-export function part2() {
+export function part2(pairs: Pair[]) {
     const map = new Map<number, number>();
 
     pairs.forEach((pair) => {
@@ -58,15 +54,39 @@ export function part2() {
     });
 
     let sum = 0;
-    leftList.forEach((left) => {
-        const item = map.get(left) || 0;
-        sum += left * item;
+    pairs.forEach((pair) => {
+        const item = map.get(pair.left) || 0;
+        sum += pair.left * item;
     });
     return sum;
 }
 
-const part_1 = part1();
-console.log(`SUM is ${part_1}`);
+async function main() {
+    const input = new TextDecoder().decode(
+        // await Bun.file("./data/day1/test").bytes(),
+        await Bun.file("./data/day1/input").bytes(),
+    );
 
-const part_2 = part2();
-console.log(`SUM is ${part_2}`);
+    const lines = input.split("\n");
+    const lists: Lists = {
+        left: [],
+        right: [],
+    };
+    const pairs: Pair[] = [];
+
+    lines.forEach((line) => {
+        processLine(lists, line);
+    });
+
+    sortLists(lists);
+
+    getPairs(pairs, lists);
+
+    const part_1 = part1(pairs);
+    console.log(`SUM is ${part_1}`);
+
+    const part_2 = part2(pairs);
+    console.log(`SUM is ${part_2}`);
+}
+
+await main();
