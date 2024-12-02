@@ -1,6 +1,3 @@
-Here’s an improved version of your README for the Advent of Code 2024 solution
-repository:
-
 # Advent of Code 2024 - Solutions
 
 Welcome to my solutions for the
@@ -76,6 +73,3 @@ advent-of-code-2024/
 This project is licensed under the [MIT License](LICENSE).
 
 Happy Coding! 🎄✨
-
-This version adds structure, details, and a welcoming tone while maintaining
-clarity.
